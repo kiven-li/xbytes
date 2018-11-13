@@ -7,7 +7,7 @@ LALR(1)语法分析生成器
 
 1.语法说明文件：
 这里用一个简单的计算器来说明语法说明文件的用法。下面是计算器的语法说明文件。
-
+···
 %include { #include <iostream> }
 %token { int }
 %syntax_error { std::cout << "Error: Syntax error.\n" << std::endl;}
@@ -32,7 +32,7 @@ exp(A) -> exp(B) DIV exp(C). {
     std::cout << A << "=" << B << "/" << C << std::endl;
 }
 exp(A) -> INT(B). { A = B; std::cout << A << "=" << B << std::endl;}
-
+···
 终结符：终结符的名称只能由大写字母组成，在生成PARSER.hxx文件中会包括所有终结符的枚举定义。词法分析器的分析结果要和这里定义的枚举值一致。
 
 　　非终结符：非终结符由小写字母、下划线组成，非终结符只存在于生成语法分析器的过程中。生成的语法分析器不会包括非终结符。
@@ -62,7 +62,7 @@ exp(A) -> INT(B). { A = B; std::cout << A << "=" << B << std::endl;}
 　　2.语法分析器使用方式：
 
 在根目录下直接输入 make 。编译xbytes，生成的可执行程序会被移入sample目录中，进入sample目录，然后执行./x calculate.x 就可以生成，简单计算器的语法分析程序了。使用这个程序的方式是自己写一个main.cpp文件，文件内容如下：
-
+···
 #include "PARSER.hxx"
 #include <iostream>
 
@@ -84,6 +84,7 @@ int main()
 
     return 0;
 }
+···
 使用方式很简单，首先要自己写个词法分析器，来进行词法分析，然后将词法分析得到的token一个个的喂给parser就可以了。parser::eat函数的第一个参数是token的类型，第二个参数是token的值。读取结束后，最后写入0,就是结束分析。如果想简单看下运行效果，进入sample目录后直接make test就可以了。
 
 3.运行结果：
